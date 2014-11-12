@@ -28,11 +28,11 @@
 
 </head>
 
-<body >    <!--ng-controller="loginController as login"-->
+<body ng-controller="AppController">
 
 <header class="header">
     <h1>Узнайте ваш гороскоп</h1>
-    <div ng-if="isAuthorized(userRoles)">Welcome, {{ currentUser }}</div>
+    <div ng-if="isAuthorized()">Welcome, {{currentUser}}</div>
 </header>
 
 
@@ -42,7 +42,7 @@
     <!--<ul class="list-group">-->
         <!--<li class="list-group-item" ng-repeat="product in store.products">-->
             <!--<h3 ng-include="'product-title.html'"></h3>-->
-            <login-form ng-show="true"></login-form>
+            <login-form ng-show="!isAuthorized()"></login-form>
            <!-- <review-form></review-form>-->
 
 
@@ -56,6 +56,5 @@
 </main>
 
 <footer class="page-footer"></footer>
-<button ng-click="clickFunction()">Click</button>
 </body>
 </html>

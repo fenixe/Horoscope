@@ -1,9 +1,6 @@
 (function () {
     var app = angular.module('horoscope', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'AppController','AuthService', 'LoginController']);
 
-    app.factory('Data', function(){
-         return {message : 'dsf'}
-    });
 
     app.service('userService', function() {
         this.userData = {yearSetCount: 0};

@@ -1,25 +1,20 @@
 (function () {
     var app = angular.module('AuthService', []);
 
-    app.service('AuthService', function ($http, Session ) {
+    app.service('AuthService', function ($http, Session ,  $cookieStore) {
         return {
             login: function (loginData) {
                 return $http
                     .post('./login/login.json', loginData)
                     .then(function (res) {
                         var userData = res.data.user;
-                        Session.create(userData.ID, userData.userID);
+                        Session.create(userData.ID, loginData);
+                        $cookieStore.put(userData.ID, loginData);
+                        console.log(Session);
                     });
             },
-            isAuthenticated :  function () {
-                return !!Session.userId;
-            },
-            isAuthorized: function (authorizedRoles) {
-                if (!angular.isArray(authorizedRoles)) {
-                    authorizedRoles = [authorizedRoles];
-                }
-                return (this.isAuthenticated() &&
-                authorizedRoles.indexOf(Session.userID) !== -1);
+            isAuthorized: function () {
+                return !!Session.id;
             }
         };
     });
@@ -35,10 +30,6 @@
         };
         return this;
     });
-
-
-
-
 
 
 
