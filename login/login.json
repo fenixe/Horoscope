@@ -1,0 +1,16 @@
+{
+    "success": true,
+    "user": {
+        "ID": "5565656",
+        "EMail": "DubitskiiDA@surgut.gazprom.ru",
+        "FullName": "Дубицкий Дмитрий А",
+        "ShortName": "Дубицкий Дмитрий Анатольевич",
+        "userID": "29517349994",
+        "OrgUnitName": "Техподдержка",
+        "Position": "",
+        "role" : "admin",
+        "User" : "Дубицкий Дмитрий А",
+        "Login": "DubitskiiDA",
+        "CardHolderID": ""
+    }
+}
