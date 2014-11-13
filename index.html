@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru" ng-app="horoscope">
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" media="screen" href="bootstrap/css/bootstrap.min.css">
+
     <!-- <link rel="stylesheet" media="screen" href="bootstrap/css/style.css">-->
     <style>
         .ng-invalid.ng-dirty {
@@ -21,7 +23,7 @@
     <!--<script src="js/angular/angular-ui-router.min.js"></script> -->
     <script src="js/angular/angular-route.min.js"></script>
 
-    <script src="js/angular/angular-local-storage.js"></script>
+    <script src="js/angular/angular-local-storage.min.js"></script>
     <script src="js/angular/angular-resource.min.js"></script>
 
     <script src="app.js"></script>
@@ -29,37 +31,40 @@
     <script src="js/AuthService.js"></script>
     <script src="js/LoginController.js"></script>
     <script src="js/AppController.js"></script>
-    <script src="js/Content.js"></script>
+    <script src="js/ContentController.js"></script>
+    <script src="js/NavController.js"></script>
 
 
 </head>
 
-<body ng-controller="AppController">
+<body ng-controller="AppController as appCtrl">
 
-<header class="header text-center" >
-    <h1>Узнайте ваш гороскоп</h1>
-    <div ng-if="isAuthorized" class="text-right">Welcome, {{currentUser}}
-        <button ng-click="logout(5565656)" id="btn_logout" name="btn_logout" class="btn btn-primary btn-xs">LogOut</button>
+<header class="header modal-body" >
+    <h1 class="text-center">Find out your horoscope</h1>
+    <div ng-if="isAuthorized()" class="text-right">Welcome, {{ currentUser.email +  ' (' + (currentUser.date | date:"dd.MM.yyyy" ) + ')'  }}
+        <button ng-click="logout()" id="btn_logout" name="btn_logout" class="btn btn-primary btn-xs">LogOut</button>
     </div>
 </header>
 
 
 <main class="container">
-    <!--<ul class="list-group">-->
-        <!--<li class="list-group-item" ng-repeat="product in store.products">-->
-            <!--<h3 ng-include="'product-title.html'"></h3>-->
-            <login-form ng-show="!isAuthorized"></login-form>
+    <login-form ng-show="!isAuthorized()"></login-form>
+
+    <div class="container-fluid" ng-show="isAuthorized()">
+        <div class="row">
+            <content-panel></content-panel>
+            <nav-panel></nav-panel>
+
+        </div>
+    </div>
 
 
-            <content-panel ng-controller="ContentController" ng-show="isAuthorized"></content-panel>
+    <!-- </li>-->
+    <!--  </ul>-->
 
+    <!--end #content -->
 
-       <!-- </li>-->
-  <!--  </ul>-->
-
- <!--end #content -->
-
-   <!-- <div class="page-buffer"></div>-->
+    <!-- <div class="page-buffer"></div>-->
 </main>
 
 <footer class="page-footer"></footer>

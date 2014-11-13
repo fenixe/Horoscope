@@ -1,9 +1,13 @@
 (function () {
-    var app = angular.module('horoscope', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'AppController', 'AuthService', 'LoginController', 'Content']);
+    var app = angular.module('horoscope', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'AppController', 'AuthService', 'LoginController', 'ContentController', 'NavController']);
 
+
+    app.config(['localStorageServiceProvider', function(localStorageServiceProvider){
+        localStorageServiceProvider.setPrefix('horoscope');
+    }]);
 
     app.service('userService', function () {
-        this.userData = {yearSetCount: 0};
+        this.userData = {};
         this.user = function () {
             return this.userData;
         };
@@ -25,8 +29,9 @@
         };
     });
 
-    app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
-        /* $rootScope.$on('$stateChangeStart', function (event, next) {
+
+    /*  app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
+          *//* $rootScope.$on('$stateChangeStart', function (event, next) {
          var authorizedRoles = next.data.authorizedRoles;
          if (!AuthService.isAuthorized(authorizedRoles)) {
          event.preventDefault();
@@ -38,8 +43,8 @@
          $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
          }
          }
-         });*/
-    });
+         });*//*
+    });*/
 
     app.config(function ($httpProvider) {
         $httpProvider.interceptors.push([
@@ -50,20 +55,17 @@
         ]);
     });
 
-    app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
+    app.factory('AuthInterceptor', function ($rootScope, $q) {
         return {
             responseError: function (response) {
                 if (response.status === 401) {
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated,
-                        response);
+
                 }
                 if (response.status === 403) {
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized,
-                        response);
+
                 }
                 if (response.status === 419 || response.status === 440) {
-                    $rootScope.$broadcast(AUTH_EVENTS.sessionTimeout,
-                        response);
+
                 }
                 return $q.reject(response);
             }
