@@ -8,7 +8,7 @@
         };
     });
 
-    app.controller('LoginController', function ($scope, $http, userService, $rootScope, AUTH_EVENTS, AuthService) {
+    app.controller('LoginController', function ($scope,$filter, $http, userService, $rootScope, AUTH_EVENTS, AuthService) {
         this.loginData = {
             email: 'ghjkhjk@dfgsdg.ru',
             date: '2014-11-02',
@@ -18,7 +18,8 @@
         this.login = function (loginData) {
             AuthService.login(loginData).then(function () {
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                $rootScope.currentUser = loginData.email;
+                var userDate = $filter('date')(loginData.date, 'dd.MM.yyyy');
+                $rootScope.currentUser = loginData.email + " ("+ userDate + ")";
             }, function () {
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
             });

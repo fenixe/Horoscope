@@ -1,20 +1,25 @@
 (function () {
     var app = angular.module('AuthService', []);
 
-    app.service('AuthService', function ($http, Session ,  $cookieStore) {
+    app.service('AuthService', function ($http, Session, $cookies,  $cookieStore) {
         return {
             login: function (loginData) {
                 return $http
                     .post('./login/login.json', loginData)
                     .then(function (res) {
                         var userData = res.data.user;
+                        console.log(userData);
                         Session.create(userData.ID, loginData);
                         $cookieStore.put(userData.ID, loginData);
-                        console.log(Session);
                     });
             },
+            logout : function(userData){
+                $cookieStore.remove(userData);
+                Session.destroy();
+            },
             isAuthorized: function () {
-                return !!Session.id;
+                console.log($cookieStore.get());
+                return !!$cookies;
             }
         };
     });

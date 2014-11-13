@@ -1,44 +1,44 @@
 (function () {
-    var app = angular.module('horoscope', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'AppController','AuthService', 'LoginController']);
+    var app = angular.module('horoscope', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'AppController', 'AuthService', 'LoginController', 'Content']);
 
 
-    app.service('userService', function() {
+    app.service('userService', function () {
         this.userData = {yearSetCount: 0};
-        this.user = function() {
+        this.user = function () {
             return this.userData;
         };
 
-        this.setEmail = function(email) {
+        this.setEmail = function (email) {
             this.userData.email = email;
         };
 
-        this.getEmail = function() {
+        this.getEmail = function () {
             return this.userData.email;
         };
 
-        this.setSetCount = function(setCount) {
+        this.setSetCount = function (setCount) {
             this.userData.yearSetCount = setCount;
         };
 
-        this.getSetCount = function() {
+        this.getSetCount = function () {
             return this.userData.yearSetCount;
         };
     });
 
     app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
-       /* $rootScope.$on('$stateChangeStart', function (event, next) {
-            var authorizedRoles = next.data.authorizedRoles;
-            if (!AuthService.isAuthorized(authorizedRoles)) {
-                event.preventDefault();
-                if (AuthService.isAuthenticated()) {
-                    // user is not allowed
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                } else {
-                    // user is not logged in
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-                }
-            }
-        });*/
+        /* $rootScope.$on('$stateChangeStart', function (event, next) {
+         var authorizedRoles = next.data.authorizedRoles;
+         if (!AuthService.isAuthorized(authorizedRoles)) {
+         event.preventDefault();
+         if (AuthService.isAuthenticated()) {
+         // user is not allowed
+         $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+         } else {
+         // user is not logged in
+         $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+         }
+         }
+         });*/
     });
 
     app.config(function ($httpProvider) {

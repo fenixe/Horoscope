@@ -1,4 +1,5 @@
-<form class="form-horizontal" ng-controller="LoginController as logCtrl" method="post" name="loginForm"   ng-submit="logCtrl.login(logCtrl.loginData)" novalidate>
+<form class="form-horizontal" ng-controller="LoginController as logCtrl" method="post"
+      name="loginForm" ng-submit="loginForm.$valid && logCtrl.login(logCtrl.loginData)" novalidate>
     <!--ng-controller="LoginController"  ng-submit="login(credentials)"-->
 
     <!-- login form -->
