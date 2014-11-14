@@ -1,4 +1,5 @@
 (function () {
+    /* Content panel*/
     var app = angular.module('ContentController', []);
 
     app.filter('capitalize', function () {
@@ -9,19 +10,10 @@
         }
     });
 
-    app.service('ContentService', function ($http, $filter, localStorageService) {
+    app.service('ContentService', function ($http, $filter, $rootScope) {
         return {
-            getHoroscope: function (zodiac, date) {
-                for (var key in date) {
-                    $http({
-                        method: 'POST',
-                        url: './content/parse-content.php',
-                        data: {zodiac: zodiac, date: date[key]},
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                    }).success(function (res) {
-                        localStorageService.set(res.date, res);
-                    })
-                }
+            getHoroscope: function (zodiac, dates) {
+                return $rootScope.promise = $http.post('./content/parse-content.php', {zodiac: zodiac, dates: dates});
             },
             getZodiac: function (date) {
                 var zodiacs = {
@@ -45,22 +37,33 @@
         };
     });
 
-    app.directive('contentPanel', function (ContentService, localStorageService) {
+    app.directive('contentPanel', function (ContentService, localStorageService, HOROSCOPES) {
         return {
             restrict: 'E',
-            templateUrl: 'content-panel.html',
-            controller: function ($scope) {
+            templateUrl: './view/content-panel.html',
+            controller: function ($scope, $rootScope) {
                 this.tab = 'today';
-                this.horoscope = '';
-                this.zodiac = '';
-                try{
-                    this.horoscope = localStorageService.get(this.tab).horoscope;
-                    this.zodiac = localStorageService.get(this.tab).zodiac;
-                }catch (ex){}
 
-                this.setTab = function (nameTab) {
-                    this.horoscope = localStorageService.get(nameTab).horoscope;
+                var curUser = localStorageService.get(this.tab);
+                $scope.curUser = curUser || [];
+
+                this.changeTab = function (nameTab) {
+                    var ls =  localStorageService.get(nameTab);
+                    $scope.curUser.horoscope = ls.horoscope;
+                    $scope.curUser.zodiac = ls.zodiac;
                     this.tab = nameTab;
+                };
+                this.isLoginUser = function(){
+                    return $scope.curUser.zodiac !== $rootScope.loginUser.zodiac
+                };
+                this.setLoginUser = function(){
+                    ContentService.getHoroscope($rootScope.loginUser.zodiac, HOROSCOPES).then(function (res) {
+                        angular.forEach(res.data, function (value, key) {
+                            localStorageService.set(value.date, value);
+                        });
+                        $scope.curUser = $rootScope.loginUser;
+                        $scope.contCtrl.changeTab($scope.contCtrl.tab);
+                    });
                 };
                 this.isSet = function (checkTab) {
                     return this.tab === checkTab;
