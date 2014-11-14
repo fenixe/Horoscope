@@ -1,6 +1,20 @@
 (function () {
     var app = angular.module('horoscope', ['ngRoute', 'ngCookies', 'LocalStorageModule', 'AppController', 'AuthService', 'LoginController', 'ContentController', 'NavController']);
 
+    app.constant('COOKIE',{
+        userID : 'userID'
+    });
+
+    app.constant('HOROSCOP',{
+        yesterday : 'yesterday',
+        tomorrow : 'tomorrow',
+        today : 'today'
+    });
+
+    app.config( function( $httpProvider ) {    // [url]http://habrahabr.ru/post/181009/[/url]
+        $httpProvider.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=utf-8';
+
+    });
 
     app.config(['localStorageServiceProvider', function(localStorageServiceProvider){
         localStorageServiceProvider.setPrefix('horoscope');
@@ -30,21 +44,6 @@
     });
 
 
-    /*  app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
-          *//* $rootScope.$on('$stateChangeStart', function (event, next) {
-         var authorizedRoles = next.data.authorizedRoles;
-         if (!AuthService.isAuthorized(authorizedRoles)) {
-         event.preventDefault();
-         if (AuthService.isAuthenticated()) {
-         // user is not allowed
-         $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-         } else {
-         // user is not logged in
-         $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-         }
-         }
-         });*//*
-    });*/
 
     app.config(function ($httpProvider) {
         $httpProvider.interceptors.push([

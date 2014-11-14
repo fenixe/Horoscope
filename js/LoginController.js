@@ -5,45 +5,27 @@
         return {
             restrict: 'E',
             templateUrl: 'login-form.html',
-            controller: function ($rootScope,$filter, localStorageService, COOKIE,  AuthService, ContentService) {
-                this.loginData = {
+            controller: function ($rootScope, $scope, localStorageService, COOKIE, HOROSCOP,  AuthService, ContentService) {
+                $scope.loginData = {
                     email: 'ghjkhjk@dfgsdg.ru',
-                    date: '2014-11-03',
-                    isRemember : false
+                    date: '2014-12-27'
                 };
                 this.login = function (loginData) {
                     AuthService.login(loginData).then(function (res) {
-                        //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                         var userData = res.data['user'];
-                        localStorageService.set(COOKIE.userID, userData);
-                        $rootScope.currentUser = userData;
 
-                        ContentService.getHoroscope('cancer', userData.date ).then(function(res){
-                            console.log(res);
-                        });
+                        $rootScope.currentUser = userData;
+                        $rootScope.currentUser.zodiac = ContentService.getZodiac($scope.currentUser.date) ;
+                        localStorageService.set(COOKIE.userID, $rootScope.currentUser);
+
+                        ContentService.getHoroscope($rootScope.currentUser.zodiac,HOROSCOP);
                     }, function () {
-                        //$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                     });
                 };
             },
             controllerAs: 'logCtrl'
         };
     });
-
-
-
-    app.constant('AUTH_EVENTS', {
-        loginSuccess: 'auth-login-success',
-        loginFailed: 'auth-login-failed',
-        logoutSuccess: 'auth-logout-success',
-        sessionTimeout: 'auth-session-timeout',
-        notAuthenticated: 'auth-not-authenticated',
-        notAuthorized: 'auth-not-authorized'
-    });
-
-    app.constant('COOKIE',{
-        userID : 'userID'
-    })
 
 
 })();

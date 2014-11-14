@@ -1,14 +1,7 @@
 {
     "success": true,
     "user": {
-        "FullName": "Дубицкий Дмитрий А",
-        "ShortName": "Дубицкий Дмитрий Анатольевич",
         "email":"ghjkhjk@dfgsdg.ru",
-        "date":"2014-11-03",
-        "userID": "29517349994",
-        "OrgUnitName": "Техподдержка",
-        "User" : "Дубицкий Дмитрий А",
-        "Login": "DubitskiiDA",
-        "CardHolderID": ""
+        "date":"2014-11-03"
     }
 }

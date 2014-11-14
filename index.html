@@ -7,15 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" media="screen" href="bootstrap/css/bootstrap.min.css">
 
-    <!-- <link rel="stylesheet" media="screen" href="bootstrap/css/style.css">-->
-    <style>
-        .ng-invalid.ng-dirty {
-            border-color: #FA787E;
-        }
-        .ng-valid.ng-dirty {
-            border-color: #78FA89;
-        }
-    </style>
+     <link rel="stylesheet" media="screen" href="bootstrap/css/style.css">
 
     <script src="js/angular/angular.js"></script>
     <script src="js/angular/angular-cookies.min.js"></script>
@@ -35,13 +27,14 @@
     <script src="js/NavController.js"></script>
 
 
+
 </head>
 
 <body ng-controller="AppController as appCtrl">
 
 <header class="header modal-body" >
     <h1 class="text-center">Find out your horoscope</h1>
-    <div ng-if="isAuthorized()" class="text-right">Welcome, {{ currentUser.email +  ' (' + (currentUser.date | date:"dd.MM.yyyy" ) + ')'  }}
+    <div ng-if="isAuthorized()" class="text-right">Welcome, {{ currentUser.email +  ' (' + (currentUser.zodiac | capitalize ) + ')'  }}
         <button ng-click="logout()" id="btn_logout" name="btn_logout" class="btn btn-primary btn-xs">LogOut</button>
     </div>
 </header>

@@ -2,28 +2,21 @@
 <div class="col-xs-12 col-md-8">
     <section>
         <ul class="nav nav-pills">
-            <li ng-class="{active: contCtrl.isSet(1)}">
-                <a href ng-click="contCtrl.setTab(1)">Yesterday</a>
+            <li ng-class="{active: contCtrl.isSet('yesterday')}">
+                <a href ng-click="contCtrl.setTab('yesterday')">Yesterday</a>
             </li>
-            <li ng-class="{active: contCtrl.isSet(2)}">
-                <a href ng-click="contCtrl.setTab(2)">Today</a>
+            <li ng-class="{active: contCtrl.isSet('today')}">
+                <a href ng-click="contCtrl.setTab('today')">Today</a>
             </li>
-            <li ng-class="{active: contCtrl.isSet(3)}">
-                <a href ng-click="contCtrl.setTab(3)">Tomorrow</a>
+            <li ng-class="{active: contCtrl.isSet('tomorrow')}">
+                <a href ng-click="contCtrl.setTab('tomorrow')">Tomorrow</a>
             </li>
         </ul>
-        <div class="panel" ng-show="contCtrl.isSet(1)">
-            <h4>Description</h4>
-            <p>{{contCtrl.horoscope}}</p>
+        <div class="panel" >
+            <h4>{{contCtrl.zodiac | capitalize}}</h4>
+            <blockquote>{{contCtrl.horoscope}}</blockquote>
         </div>
-        <div class="panel" ng-show="contCtrl.isSet(2)">
-            <h4>Specifications</h4>
-            <blockquote>Note yet</blockquote>
-        </div>
-        <div class="panel" ng-show="contCtrl.isSet(3)">
-            <h4>Description</h4>
-            <blockquote>None yet</blockquote>
-        </div>
+
     </section>
 </div>
 
